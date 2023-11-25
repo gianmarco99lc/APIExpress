@@ -57,7 +57,25 @@ objects:
         name: apiexpress-appserver
         weight: 100
       wildcardPolicy: None
-  
+
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: apiexpress-pvc
+    spec:
+      accessModes:
+        - ReadWriteMany
+      resources:
+        requests:
+          storage: 1Gi
+    volumes:
+    - name: apiexpress-volume
+      persistentVolumeClaim:
+        claimName: apiexpress-pvc
+    volumeMounts:
+    - name: apiexpress-volume
+      mountPath: /opt/app-root/src/data
+      subPath: www
   
   - apiVersion: apps/v1
     kind: Deployment
